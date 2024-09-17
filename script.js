@@ -17,13 +17,17 @@ function createButtons() {
         const btn = document.createElement('button');
         btn.classList.add('btn');
         btn.innerText = sound.name;
+		
+		const audio = document.createElement('audio');
+        audio.setAttribute('id', sound.name);  // Assign ID to each audio element
+        audio.src = `https://www.soundjay.com/human/sounds/applause-01.mp3`;
+        document.body.appendChild(audio);
 
         // Add event listener to play the corresponding sound when clicked
         btn.addEventListener('click', () => {
             stopAllSounds(); // Stop any other sounds that might be playing
-            const audio = new Audio(`https://www.soundjay.com/human/sounds/applause-01.mp3`);
+            // const audio = new Audio(`https://www.soundjay.com/human/sounds/applause-01.mp3`);
             audio.play();
-            btn.audio = audio; // Store the audio element in the button so we can stop it later
         });
 
         // Append button to container
@@ -33,11 +37,10 @@ function createButtons() {
 
 // Function to stop all currently playing sounds
 function stopAllSounds() {
-    document.querySelectorAll('.btn').forEach(btn => {
-        if (btn.audio) {
-            btn.audio.pause();
-            btn.audio.currentTime = 0;
-        }
+     const audios = document.querySelectorAll('audio'); // Select all audio elements
+    audios.forEach(audio => {
+        audio.pause();
+        audio.currentTime = 0; // Reset audio to start
     });
 }
 
